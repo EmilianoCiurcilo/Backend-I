@@ -1,0 +1,45 @@
+[
+	{
+		"id": 1,
+		"title": "Mouse Razer Viper 8KHz",
+		"description": "Hablar de Razer dentro del mundo gamer es palabra mayor. Esta compañía ofrece productos de muy alta calidad a sus usuarios. Su línea de teclados es reconocida por haber recibido distintos galardones y premios internacionales por su alto desempeño.",
+		"code": "123456",
+		"price": 100000,
+		"status": true,
+		"stock": 27,
+		"category": "Mouse",
+		"thumbnail": "Viper8KHz.png"
+	},{
+		"id": 2,
+		"title": "Mouse Razer Viper V2 Pro",
+		"description": "Desde 2005 Razer es la marca líder de estilo de vida para jugadores. Ha diseñado y construido el ecosistema de hardware, software y servicios más grande del mundo. La ubicación de cada botón y curva de los mouses Razer se crearon para adaptarse perfectamente a tu mano. Gracias a estos dispositivos, conseguirás una experiencia de juego cómoda y placentera.",
+		"code": "654321",
+		"price": 170000,
+		"status": true,
+		"stock": 9,
+		"category": "Mouse",
+		"thumbnail": "ViperV2Pro.png"
+	},
+	{
+		"id": 3,
+		"title": "Mouse Razer Viper V3 Pro",
+		"description": "Desde 2005 Razer es la marca líder de estilo de vida para jugadores. Ha diseñado y construido el ecosistema de hardware, software y servicios más grande del mundo. La ubicación de cada botón y curva de los mouses Razer se crearon para adaptarse perfectamente a tu mano. Gracias a estos dispositivos, conseguirás una experiencia de juego cómoda y placentera.",
+		"code": "135790",
+		"price": 210000,
+		"status": false,
+		"stock": 5,
+		"category": "Mouse",
+		"thumbnail": "ViperV3Pro.png"
+	},
+	{
+		"id": 4,
+		"title": "Teclado Razer Huntsman Mini",
+		"description": "Hablar de Razer dentro del mundo gamer es palabra mayor. Esta compañía ofrece productos de muy alta calidad a sus usuarios. Su línea de teclados es reconocida por haber recibido distintos galardones y premios internacionales por su alto desempeño.",
+		"code": "246810",
+		"price": 150000,
+		"status": true,
+		"stock": 50,
+		"category": "Teclado",
+		"thumbnail": "HuntsmanMini.png"
+	}
+]
