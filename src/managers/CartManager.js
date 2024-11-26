@@ -11,7 +11,6 @@ export default class CartManager {
         this.#jsonFilename = "carts.json";
     }
 
-    // Busca un Carrito por su ID
     async #findOneById(id) {
         this.#carts = await this.getAll();
         const cartFound = this.#carts.find((item) => item.id === Number(id));
@@ -23,7 +22,6 @@ export default class CartManager {
         return cartFound;
     }
 
-    // Obtiene una lista de carritos
     async getAll() {
         try {
             this.#carts = await readJsonFile(paths.files, this.#jsonFilename);
@@ -33,7 +31,6 @@ export default class CartManager {
         }
     }
 
-    // Obtiene un carrito específico por su ID
     async getOneById(id) {
         try {
             const cartFound = await this.#findOneById(id);
@@ -43,7 +40,6 @@ export default class CartManager {
         }
     }
 
-    // Inserta un carrito
     async insertOne(data) {
         try {
             const products = data?.products?.map((item) => {
@@ -64,7 +60,6 @@ export default class CartManager {
         }
     }
 
-    // Agrega un producto a una carrito o incrementa la cantidad de un producto existente
     addOneProduct = async (id, productID) => {
         try {
             const cartFound = await this.#findOneById(id);

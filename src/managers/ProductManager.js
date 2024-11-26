@@ -12,7 +12,6 @@ export default class ProductManager {
         this.#jsonFilename = "products.json";
     }
 
-    // Busca un producto por su ID
     async #findOneById(id) {
         this.#products = await this.getAll();
         const productFound = this.#products.find((item) => item.id === Number(id));
@@ -24,7 +23,6 @@ export default class ProductManager {
         return productFound;
     }
 
-    // Obtiene una lista de productos
     async getAll() {
         try {
             this.#products = await readJsonFile(paths.files, this.#jsonFilename);
@@ -34,7 +32,6 @@ export default class ProductManager {
         }
     }
 
-    // Obtiene un producto específico por su ID
     async getOneById(id) {
         try {
             const productFound = await this.#findOneById(id);
@@ -44,17 +41,12 @@ export default class ProductManager {
         }
     }
 
-    // Inserta un producto
     async insertOne(data, file) {
         try {
             const { title, description, code, price, status, stock, category } = data;
 
             if (!title || !description || !code || !price || !status || !stock || !category ) {
                 throw new ErrorManager("Faltan datos obligatorios", 400);
-            }
-
-            if (!file?.filename) {
-                throw new ErrorManager("Falta el archivo de la imagen", 400);
             }
 
             const product = {
@@ -66,7 +58,7 @@ export default class ProductManager {
                 status: convertToBoolean(status),
                 stock: Number(stock),
                 category,
-                thumbnail: file?.filename,
+                thumbnail: file?.filename ?? null,
             };
 
             this.#products.push(product);
@@ -74,12 +66,11 @@ export default class ProductManager {
 
             return product;
         } catch (error) {
-            if (file?.filename) await deleteFile(paths.images, file.filename); // Elimina la imagen si ocurre un error
+            if (file?.filename) await deleteFile(paths.images, file.filename);
             throw new ErrorManager(error.message, error.code);
         }
     }
 
-    // Actualiza un producto en específico
     async updateOneById(id, data, file) {
         try {
             const { title, description, price, status, stock, category } = data;
@@ -97,29 +88,25 @@ export default class ProductManager {
                 category: category || productFound.category,
                 thumbnail: newThumbnail || productFound.thumbnail,
             };
-
             const index = this.#products.findIndex((item) => item.id === Number(id));
             this.#products[index] = product;
             await writeJsonFile(paths.files, this.#jsonFilename, this.#products);
 
-            // Elimina la imagen anterior si es distinta de la nueva
             if (file?.filename && newThumbnail !== productFound.thumbnail) {
                 await deleteFile(paths.images, productFound.thumbnail);
             }
 
             return product;
         } catch (error) {
-            if (file?.filename) await deleteFile(paths.images, file.filename); // Elimina la imagen si ocurre un error
+            if (file?.filename) await deleteFile(paths.images, file.filename);
             throw new ErrorManager(error.message, error.code);
         }
     }
 
-    // Elimina un producto en específico
     async deleteOneById (id) {
         try {
             const productFound = await this.#findOneById(id);
 
-            // Si tiene thumbnail definido, entonces, elimina la imagen del producto
             if (productFound.thumbnail) {
                 await deleteFile(paths.images, productFound.thumbnail);
             }

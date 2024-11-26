@@ -5,7 +5,6 @@ import uploader from "../utils/uploader.js";
 const router = Router();
 const productManager = new ProductManager();
 
-// Ruta para obtener los productos
 router.get("/", async (req, res) => {
     try {
         const products = await productManager.getAll(req.query);
@@ -15,7 +14,6 @@ router.get("/", async (req, res) => {
     }
 });
 
-// Ruta para obtener un producto por su ID
 router.get("/:pid", async (req, res) => {
     try {
         const product = await productManager.getOneById(req.params.pid);
@@ -25,7 +23,6 @@ router.get("/:pid", async (req, res) => {
     }
 });
 
-// Ruta para crear un producto, permite la subida de imágenes
 router.post("/", uploader.single("file"), async (req, res) => {
     try {
         const product = await productManager.insertOne(req.body, req.file);
@@ -35,7 +32,6 @@ router.post("/", uploader.single("file"), async (req, res) => {
     }
 });
 
-// Ruta para actualizar un producto por su ID, permite la subida de imágenes
 router.put("/:pid", uploader.single("file"), async (req, res) => {
     try {
         const product = await productManager.updateOneById(req.params.pid, req.body, req.file);
@@ -45,7 +41,6 @@ router.put("/:pid", uploader.single("file"), async (req, res) => {
     }
 });
 
-// Ruta para eliminar un producto por su ID
 router.delete("/:pid", async (req, res) => {
     try {
         await productManager.deleteOneById(req.params.pid);

@@ -1,0 +1,166 @@
+* {
+    box-sizing: border-box;
+    background-color: rgba(2, 1, 20)
+}
+
+.error404 {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.error404 img {
+    width: 30%;
+}
+
+.title-realtime{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 40px;
+    color: rgb(255, 255, 255);
+}
+main{
+    color: rgba(255, 255, 255, 0.863);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+}
+
+.products {
+    display: flex;
+    flex-direction: column;
+    justify-items: start;
+    width: 500px;
+}
+
+.products__list {
+    height: 100px;
+}
+
+.products__list__item {
+    list-style-position: inside;
+    padding: 0;
+    margin: 0.25rem;
+    overflow-x: hidden;
+    overflow-y: scroll;
+    height: 5em;
+    width: 100%;
+}
+
+.products__form {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+    width: 500px;
+}
+
+.products__delete {
+    display: flex;
+    gap: 0.5rem;
+    width: 500px;
+}
+
+.products__delete__input {
+    width: 100%;
+}
+
+.error-message {
+    color: rgb(214, 22, 22);
+}
+
+.input-name{
+    display: flex;
+    border-color: white;
+    color: black;
+    border-radius: 5px;
+    background-color: rgba(255, 255, 255, 0.845)
+}
+.input-name::placeholder{
+    color: black;
+}
+
+.input-description{
+    display: flex;
+    border-color: white;
+    color: black;
+    border-radius: 5px;
+    background-color: rgba(255, 255, 255, 0.845)
+}
+.input-description::placeholder{
+    color: black;
+}
+.input-code{
+    display: flex;
+    border-color: white;
+    color: black;
+    border-radius: 5px;
+    background-color: rgba(255, 255, 255, 0.845)
+}
+.input-code::placeholder{
+    color: black;
+}
+.input-price{
+    display: flex;
+    border-color: white;
+    color: black;
+    border-radius: 5px;
+    background-color: rgba(255, 255, 255, 0.845)
+}
+.input-price::placeholder{
+    color: black;
+}
+.input-category{
+    display: flex;
+    border-color: white;
+    color: black;
+    border-radius: 5px;
+    background-color: rgba(255, 255, 255, 0.845)
+}
+.input-category::placeholder{
+    color: black;
+}
+.input-stock{
+    display: flex;
+    border-color: white;
+    color: black;
+    border-radius: 5px;
+    background-color: rgba(255, 255, 255, 0.845)
+}
+.input-stock::placeholder{
+    color: black;
+}
+.btn-guardar{
+    display: flex;
+    font-size: 15px;
+    font-weight: bolder;
+    padding: 5px;
+    background-color: rgb(40, 220, 40);
+    border-style:groove;
+    border-color: white;
+    border-radius: 5px;
+}
+.input-delete{
+    display: flex;
+    border-color: white;
+    color: black;
+    border-radius: 5px;
+    background-color: rgba(255, 255, 255, 0.845)
+}
+
+.input-delete::placeholder{
+    color: black;
+}
+
+.btn-delete{
+    display: flex;
+    font-size: 15px;
+    padding: 4px;
+    font-weight: bolder;
+    background-color: rgb(212, 17, 17);
+    border-style:groove;
+    border-color: white;
+    border-radius: 5px;
+}

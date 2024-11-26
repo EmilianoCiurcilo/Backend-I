@@ -1,0 +1,43 @@
+<header>
+    <h1 class="title-realtime">INICIO - Productos en Tiempo Real</h1>
+</header>
+
+<main>
+    <section>
+        <h3>Productos</h3>
+        <div class="products">
+            <div class="products__list">
+                <ul class="products__list__item" id="products-list"></ul>
+            </div>
+        </div>
+    </section>
+
+    <section>
+        <h3>Formulario de Productos</h3>
+        <form class="products__form" id="products-form">
+            <input class="input-name" type="text" name="title" placeholder="Nombre del producto">
+            <input class="input-description" type="text" name="description" placeholder="Descripcion">
+            <input class="input-code" type="text" name="code" placeholder="Codigo del producto">
+            <input class="input-price" type="number" name="price" placeholder="Precio">
+            <input class="input-category" type="text" name="category" placeholder="Categoria">
+            <div class="status-style">¿Esta disponible en el local?<input class="input-status" type="checkbox" name="status"></div>
+            <input class="input-stock" type="number" name="stock" placeholder="Stock inicial del producto">
+
+            <input class="btn-guardar" type="submit" value="Guardar">
+        </form>
+    </section>
+
+    <section>
+        <h3>Eliminación de Productos</h3>
+        <div class="products__delete">
+            <input class="input-delete" type="number" class="products__delete__input" id="input-product-id"
+                placeholder="ID del producto">
+            <button class="btn-delete" id="btn-delete-product">Eliminar</button>
+        </div>
+    </section>
+
+    <p class="error-message" id="error-message"></p>
+</main>
+
+<script src="/socket.io/socket.io.js"></script>
+<script src="/api/public/js/products.socket.js"></script>

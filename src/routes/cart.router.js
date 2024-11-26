@@ -4,7 +4,6 @@ import CartManager from "../managers/CartManager.js";
 const router = Router();
 const cartManager = new CartManager();
 
-// Ruta para obtener los carritos
 router.get("/", async (req, res) => {
     try {
         const cart = await cartManager.getAll(req.query);
@@ -14,7 +13,6 @@ router.get("/", async (req, res) => {
     }
 });
 
-// Ruta para obtener un carrito en específico por su ID
 router.get("/:cid", async (req, res) => {
     try {
         const cart = await cartManager.getOneById(req.params.cid);
@@ -24,7 +22,6 @@ router.get("/:cid", async (req, res) => {
     }
 });
 
-// Ruta para crear un carrito
 router.post("/", async (req, res) => {
     try {
         const cart = await cartManager.insertOne(req.body);
@@ -34,7 +31,6 @@ router.post("/", async (req, res) => {
     }
 });
 
-// Ruta para incrementar en una unidad o agregar un producto específico en un carrito por su ID
 router.post("/:cid/products/:pid", async (req, res) => {
     try {
         const { cid, pid } = req.params;

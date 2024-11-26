@@ -1,5 +1,5 @@
 {
-  "name": "proyecto_programacion_backend_1",
+  "name": "proyecto-backend",
   "version": "1.0.0",
   "main": "src/app.js",
   "type": "module",
@@ -15,8 +15,10 @@
   "description": "Pre-entrega I Proyecto de Programación Backend I",
   "dependencies": {
     "express": "^4.21.1",
+    "express-handlebars": "^8.0.1",
     "moment": "^2.30.1",
-    "multer": "^1.4.5-lts.1"
+    "multer": "^1.4.5-lts.1",
+    "socket.io": "^4.8.1"
   },
   "devDependencies": {
     "eslint": "^8.57.0",
