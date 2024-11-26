@@ -142,6 +142,11 @@ main{
     border-color: white;
     border-radius: 5px;
 }
+
+.btn-guardar:hover{
+    background-color: rgba(40, 220, 40, 0.695);
+}
+
 .input-delete{
     display: flex;
     border-color: white;
@@ -163,4 +168,32 @@ main{
     border-style:groove;
     border-color: white;
     border-radius: 5px;
+}
+
+.btn-delete:hover{
+    background-color: rgba(121, 20, 20, 0.853);
+}
+
+.title-home{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 40px;
+    color: rgb(255, 255, 255);
+}
+
+.btn-refresh{
+    display: flex;
+    justify-content: center;
+    font-size: 18px;
+    font-weight: bolder;
+    padding: 5px;
+    background-color: rgb(27, 210, 242);
+    border-style:groove;
+    border-color: white;
+    border-radius: 5px;
+}
+
+.btn-refresh:hover{
+    background-color: rgba(27, 210, 242, 0.742);
 }
