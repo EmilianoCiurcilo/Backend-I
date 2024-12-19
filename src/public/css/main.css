@@ -5,6 +5,7 @@
 
 .error404 {
     width: 100%;
+    color: red;
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -32,22 +33,39 @@ main{
 .products {
     display: flex;
     flex-direction: column;
-    justify-items: start;
-    width: 500px;
+    inline-size: none;
+    justify-content: space-between;
+    line-height: 1.5;
+    width: 1000px;
 }
 
 .products__list {
-    height: 100px;
+    display: flex;
+    height: 100%;
+    justify-content: space-between;
 }
 
 .products__list__item {
-    list-style-position: inside;
-    padding: 0;
+    padding: 0px;
     margin: 0.25rem;
-    overflow-x: hidden;
-    overflow-y: scroll;
-    height: 5em;
     width: 100%;
+}
+
+.btn_carrito {
+    display: flex;
+    flex-direction: row;
+    padding: 7px;
+    background-color: rgb(40, 220, 40);
+    color: rgb(52, 52, 52);
+    border-style:groove;
+    border-color: white;
+    border-radius: 5px;
+    font-size: 15px;
+    font-weight: bolder;
+}
+
+.btn_carrito:hover{
+    background-color: rgba(40, 220, 40, 0.695);
 }
 
 .products__form {

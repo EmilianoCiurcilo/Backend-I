@@ -1,58 +1,71 @@
-import paths from "../utils/paths.js";
-import { readJsonFile, writeJsonFile } from "../utils/fileHandler.js";
-import { generateId } from "../utils/collectionHandler.js";
 import ErrorManager from "./ErrorManager.js";
+import { isValidID } from "../config/mongoose.config.js";
+import CartModel from "../models/cart.model.js";
 
 export default class CartManager {
-    #jsonFilename;
-    #carts;
+    #cartModel;
 
     constructor() {
-        this.#jsonFilename = "carts.json";
+        this.#cartModel = CartModel;
     }
 
     async #findOneById(id) {
-        this.#carts = await this.getAll();
-        const cartFound = this.#carts.find((item) => item.id === Number(id));
+        if (!isValidID(id)) {
+            throw new ErrorManager("ID no encontrado", 400);
+        }
+        const cart = await this.#cartModel.findById(id).populate("products.product");
 
-        if (!cartFound) {
+        if(!cart){
             throw new ErrorManager("ID no encontrado", 404);
         }
 
-        return cartFound;
+        return cart;
     }
 
-    async getAll() {
+    async getAll(params) {
         try {
-            this.#carts = await readJsonFile(paths.files, this.#jsonFilename);
-            return this.#carts;
-        } catch (error) {
-            throw new ErrorManager(error.message, error.code);
+            const paginationOptions = {
+                limit: params?.limit || 10,
+                page: params?.page || 1,
+                populate: "products.product",
+                lean: true,
+            };
+            return await this.#cartModel.paginate({}, paginationOptions);
+        }
+        catch (error) {
+            throw ErrorManager.handleError(error);
         }
     }
 
     async getOneById(id) {
         try {
-            const cartFound = await this.#findOneById(id);
-            return cartFound;
+            return await this.#findOneById(id);
         } catch (error) {
-            throw new ErrorManager(error.message, error.code);
+            throw ErrorManager.handleError(error);
         }
     }
 
     async insertOne(data) {
         try {
-            const products = data?.products?.map((item) => {
-                return { products: Number(item.product), quantity: 1 };
-            });
+            const cart = await this.#cartModel.create(data);
+            return cart.populate;
+        } catch (error) {
+            throw ErrorManager.handleError(error);
+        }
+    }
 
-            const cart = {
-                id: generateId(await this.getAll()),
-                products : products ?? [],
-            };
+    async addOneProduct(id, productID) {
+        try {
+            const cart = await this.#findOneById(id);
+            const productIndex = cart.products.findIndex((item) => item.product._id.toString() === productID);
 
-            this.#carts.push(cart);
-            await writeJsonFile(paths.files, this.#jsonFilename, this.#carts);
+            if (productIndex >= 0) {
+                cart.products[productIndex].quantity++;
+            } else {
+                cart.products.push({ product: productID, quantity: 1 });
+            }
+
+            await cart.save();
 
             return cart;
         } catch (error) {
@@ -60,24 +73,49 @@ export default class CartManager {
         }
     }
 
-    addOneProduct = async (id, productID) => {
+    async updateOneById(id, data) {
         try {
-            const cartFound = await this.#findOneById(id);
-            const productIndex = cartFound.products.findIndex((item) => item.product === Number(productID));
+            const cart = await this.#findOneById(id);
+            const newValues = {
+                ...cart,
+                ...data,
+                status: data.status ? convertToBoolean(data.status) : cart.status,
+            };
+            cart.set(newValues);
+            cart.save();
 
-            if (productIndex >= 0) {
-                cartFound.products[productIndex].quantity++;
-            } else {
-                cartFound.products.push({ product: Number(productID), quantity: 1 });
-            }
-
-            const index = this.#carts.findIndex((item) => item.id === Number(id));
-            this.#carts[index] = cartFound;
-            await writeJsonFile(paths.files, this.#jsonFilename, this.#carts);
-
-            return cartFound;
+            return [data.cart];
         } catch (error) {
             throw new ErrorManager(error.message, error.code);
         }
-    };
+    }
+
+    async deleteOneProduct (id, productID) {
+        try {
+            const cart = await this.#findOneById(id);
+            const productIndex = cart.products.findIndex((item) => item.product._id.toString() === productID);
+
+            if (productIndex >= 0) {
+                cart.products.splice(productIndex, 1);
+            }
+
+            await cart.save();
+
+            return cart;
+        } catch (error) {
+            throw new ErrorManager(error.message, error.code);
+        }
+    }
+
+    async deleteAllProducts(id) {
+        try {
+            const cart = await this.#findOneById(id);
+            cart.products = [];
+            await cart.save();
+
+            return cart;
+        } catch (error) {
+            throw new ErrorManager(error.message, error.code);
+        }
+    }
 }
