@@ -13,7 +13,6 @@ module.exports = {
         "quotes": [ "error", "double" ],
         "jsx-quotes": [ "error", "prefer-double" ],
         "indent": [ "error", 4, { "StaticBlock": { "body": 4 } }],
-        "camelcase": [ 2, { "properties": "always" }],
         "comma-dangle": [ "error", "always-multiline" ],
         "comma-spacing": [ "error", { "before": false, "after": true }],
         "no-multi-spaces": "error",

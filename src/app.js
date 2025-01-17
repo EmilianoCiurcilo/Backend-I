@@ -1,31 +1,50 @@
 import express from "express";
-import { config as configHandlebars } from "./config/handlebars.config.js";
-import { config as configWebsocket } from "./config/websocket.config.js";
-import { connectDB } from "./config/mongoose.config.js";
-import routerProducts from "./routes/products.router.js";
-import routerCarts from "./routes/carts.router.js";
-import routerViewHome from "./routes/home.view.router.js";
+import routes from "./router/index.js";
+import __dirname from "./dirname.js";
+import handlebars from "express-handlebars";
+import { Server } from "socket.io";
+import viewsRoutes from "./router/views.routes.js";
+import { connectMongoDB } from "./config/mongoDB.config.js";
+import session from "express-session";
+import { initializedPassport } from "./config/passport.config.js";
+import cookieParser from "cookie-parser";
 
 const app = express();
 const PORT = 8080;
-connectDB();
 
-app.use("/api/public", express.static("./src/public"));
+connectMongoDB();
+
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
+app.engine("handlebars", handlebars.engine()); // Inicia el motor del la plantilla
+app.set("views", __dirname + "/views"); // Indicamos que ruta se encuentras las vistas
+app.set("view engine", "handlebars"); // Indicamos con que motor vamos a utilizar las vistas
+app.use(express.static("public"));
 
-configHandlebars(app);
+app.use(
+    session({
+        secret: "ClaveSecreta", // palabra secreta
+        resave: true, // Mantiene la session activa, si esta en false la session se cierra
+        saveUninitialized: true, // Guarda la session
+    }),
+);
 
-app.use("/api/products", routerProducts);
-app.use("/api/carts", routerCarts);
-app.use("/", routerViewHome);
+initializedPassport();
+app.use(cookieParser());
 
-app.use("*", (req, res) => {
-    res.status(404).render("error404", { title: "Error 404" });
-});
+// Rutas de la api
+app.use("/api", routes);
+
+// Ruta de las vistas
+app.use("/", viewsRoutes);
 
 const httpServer = app.listen(PORT, () => {
     console.log(`Ejecutándose en http://localhost:${PORT}`);
 });
 
-configWebsocket(httpServer);
+// Configuramos socket
+export const io = new Server(httpServer);
+
+io.on("connection", (socket) => {
+    console.log("Nuevo usuario Conectado");
+});

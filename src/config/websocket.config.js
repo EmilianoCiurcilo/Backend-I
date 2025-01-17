@@ -1,39 +1,39 @@
-import { Server } from "socket.io";
-import ProductManager from "../managers/ProductManager.js";
+// import { Server } from "socket.io";
+// import ProductManager from "../dao/fileSystem/ProductManager.js";
 
-const productManager = new ProductManager();
+// const productManager = new ProductManager();
 
-export const config = (httpServer) => {
+// export const config = (httpServer) => {
 
-    const socketServer = new Server(httpServer);
+//     const socketServer = new Server(httpServer);
 
-    socketServer.on("connection", async (socket) => {
-        console.log(`Cliente: ${socket.id} conectado` );
+//     socketServer.on("connection", async (socket) => {
+//         console.log(`Cliente: ${socket.id} conectado` );
 
-        socketServer.emit("products-list", { products: await productManager.getAll() });
+//         socketServer.emit("products-list", { products: await productManager.getAll() });
 
-        socket.on("insert-product", async (data) => {
-            try {
-                await productManager.insertOne(data);
+//         socket.on("insert-product", async (data) => {
+//             try {
+//                 await productManager.insertOne(data);
 
-                socketServer.emit("products-list", { products: await productManager.getAll() });
-            } catch (error) {
-                socketServer.emit("error-message", { message: error.message });
-            }
-        });
+//                 socketServer.emit("products-list", { products: await productManager.getAll() });
+//             } catch (error) {
+//                 socketServer.emit("error-message", { message: error.message });
+//             }
+//         });
 
-        socket.on("delete-product", async (data) => {
-            try {
-                await productManager.deleteOneById(Number(data.id));
+//         socket.on("delete-product", async (data) => {
+//             try {
+//                 await productManager.deleteOneById(Number(data.id));
 
-                socketServer.emit("products-list", { products: await productManager.getAll() });
-            } catch (error) {
-                socketServer.emit("error-message", { message: error.message });
-            }
-        });
+//                 socketServer.emit("products-list", { products: await productManager.getAll() });
+//             } catch (error) {
+//                 socketServer.emit("error-message", { message: error.message });
+//             }
+//         });
 
-        socket.on("disconnect", () => {
-            console.log("Se desconecto un cliente");
-        });
-    });
-};
+//         socket.on("disconnect", () => {
+//             console.log("Se desconecto un cliente");
+//         });
+//     });
+// };
