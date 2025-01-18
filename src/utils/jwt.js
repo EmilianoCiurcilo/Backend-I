@@ -1,5 +1,5 @@
 import jwt from "jsonwebtoken";
-import envsConfig from "../config/envs.config.js";
+// import envsConfig from "../config/envs.config.js";
 
 export const createToken = (user) => {
     const { _id, email } = user;
@@ -11,7 +11,7 @@ export const createToken = (user) => {
 export const verifyToken = (token) => {
     try {
 
-        return jwt.verify(token, envsConfig.JWT_SECRET);
+        return jwt.verify(token, "codigosecreto");
 
     } catch (error) {
         console.log(error);

@@ -82,7 +82,7 @@ router.get(
 
 router.get("/current", passportCall("jwt"), authorization("user"), async (req, res) => {
 // const token = req.headers.authorization.split(" ")[1];
-// const token = req.cookies.token;
+    // const token = req.cookies.token;
 
     // const validToken = verifyToken(token);
     // if (!validToken) return res.send("Not token");

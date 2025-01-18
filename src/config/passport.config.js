@@ -75,8 +75,8 @@ export const initializedPassport = () => {
         "google",
         new GoogleStrategy(
             {
-                clientID: "1086173719015-3dml5ja0cgubvmkg7s5boa5vui9eal1v.apps.googleusercontent.com",
-                clientSecret: "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",
+                clientID: "228501455547-jnao90hmgh98ngcf6aq9uk2o7ed7udt0.apps.googleusercontent.com",
+                clientSecret: "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",
                 callbackURL: "http://localhost:8080/api/session/google",
             },
             async (accessToken, refreshToken, profile, cb) => {
@@ -104,7 +104,7 @@ export const initializedPassport = () => {
     passport.use(
         "jwt",
         new JWTStrategy(
-            { jwtFromRequest: ExtractJWT.fromExtractors([cookieExtractor]), secretOrKey: "codigoSecreto" },
+            { jwtFromRequest: ExtractJWT.fromExtractors([cookieExtractor]), secretOrKey: "codigosecreto" },
             async (jwt_payload, done) => {
                 try {
                     const { email } = jwt_payload;
