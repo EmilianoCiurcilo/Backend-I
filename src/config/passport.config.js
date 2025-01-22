@@ -12,23 +12,15 @@ const GoogleStrategy = google.Strategy;
 const JWTStrategy = jwt.Strategy;
 const ExtractJWT = jwt.ExtractJwt;
 
-// Función global de estrategias
 export const initializedPassport = () => {
-    // Estrategia de registro local
+
     passport.use(
         "register",
         new LocalStrategy({ passReqToCallback: true, usernameField: "email" }, async (req, username, password, done) => {
-        /*
-    "register" es el nombre de la estrategia que estamos creando.
-    passReqToCallback: true, nos permite acceder a la request en la función de autenticación.
-    usernameField: "email", nos permite definir el campo que usaremos como username.
-    Nota: passport recibe dos datos el username y el password, en caso de que no tengamos un campo username en nuestro formulario, podemos usar usernameField para definir el campo que usaremos como username.
-    done es una función que debemos llamar cuando terminamos de procesar la autenticación.
-    */
 
             try {
                 const { first_name, last_name, age, role } = req.body;
-                // Verificamos si el usuario ya existe
+
                 const user = await userDao.getByEmail(username);
                 if (user) return done(null, false, { message: "El usuario ya existe" });
 
@@ -53,7 +45,6 @@ export const initializedPassport = () => {
         }),
     );
 
-    // Estrategia de login
     passport.use(
         "login",
         new LocalStrategy({ usernameField: "email" }, async (username, password, done) => {
@@ -70,7 +61,6 @@ export const initializedPassport = () => {
         }),
     );
 
-    // Estrategia de google
     passport.use(
         "google",
         new GoogleStrategy(
@@ -100,7 +90,6 @@ export const initializedPassport = () => {
         ),
     );
 
-    // Estrategia JWT
     passport.use(
         "jwt",
         new JWTStrategy(
@@ -118,13 +107,6 @@ export const initializedPassport = () => {
         ),
     );
 
-    // Serialización y deserialización de usuarios
-    /*
-  La serialización y deserialización de usuarios es un proceso que nos permite almacenar y recuperar información del usuario en la sesión.
-  La serialización es el proceso de convertir un objeto de usuario en un identificador único.
-  La deserialización es el proceso de recuperar un objeto de usuario a partir de un identificador único.
-  Los datos del user se almacenan en la sesión y se recuperan en cada petición.
-  */
     passport.serializeUser((user, done) => {
         done(null, user._id);
     });

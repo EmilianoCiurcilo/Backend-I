@@ -13,7 +13,6 @@ router.post("/register", async (req, res) => {
         const user = await userDao.getOne({ email });
         if (user) return res.status(401).json({ error: "El usuario con el mail ya existe" });
 
-        // Creamos la cuenta del usuario
         const newAccount = {
             number: Math.floor(Math.random() * 1000000000),
             alias: `${name.toLowerCase()}${lastName.toLowerCase()}.${Math.floor(Math.random() * 1000)}`,

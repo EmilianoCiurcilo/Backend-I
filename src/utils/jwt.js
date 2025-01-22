@@ -1,5 +1,5 @@
 import jwt from "jsonwebtoken";
-// import envsConfig from "../config/envs.config.js";
+import envsConfig from "../config/envs.config.js";
 
 export const createToken = (user) => {
     const { _id, email } = user;
