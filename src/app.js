@@ -11,8 +11,6 @@ import cookieParser from "cookie-parser";
 import envsConfig from "./config/envs.config.js";
 
 const app = express();
-const PORT = envsConfig.PORT;
-
 connectMongoDB();
 
 app.use(express.urlencoded({ extended: true }));
@@ -37,8 +35,8 @@ app.use("/api", routes);
 
 app.use("/", viewsRoutes);
 
-const httpServer = app.listen(PORT, () => {
-    console.log(`Ejecutándose en http://localhost:${PORT}`);
+const httpServer = app.listen(envsConfig.PORT, () => {
+    console.log(`Ejecutándose en http://localhost:${envsConfig.PORT}`);
 });
 
 export const io = new Server(httpServer);
