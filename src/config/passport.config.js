@@ -6,6 +6,7 @@ import { userDao } from "../dao/mongo/user.dao.js";
 import { createHash, isValidPassword } from "../utils/hashPassword.js";
 import { cookieExtractor } from "../utils/cookieExtractor.js";
 import { cartDao } from "../dao/mongo/cart.dao.js";
+import envsConfig from "./envs.config.js";
 
 const LocalStrategy = local.Strategy;
 const GoogleStrategy = google.Strategy;
@@ -65,8 +66,8 @@ export const initializedPassport = () => {
         "google",
         new GoogleStrategy(
             {
-                clientID: "228501455547-jnao90hmgh98ngcf6aq9uk2o7ed7udt0.apps.googleusercontent.com",
-                clientSecret: "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",
+                clientID: envsConfig.GOOGLE_CLIENT_ID,
+                clientSecret: envsConfig.GOOGLE_CLIENT_SECRET,
                 callbackURL: "http://localhost:8080/api/session/google",
             },
             async (accessToken, refreshToken, profile, cb) => {
@@ -93,7 +94,7 @@ export const initializedPassport = () => {
     passport.use(
         "jwt",
         new JWTStrategy(
-            { jwtFromRequest: ExtractJWT.fromExtractors([cookieExtractor]), secretOrKey: "codigosecreto" },
+            { jwtFromRequest: ExtractJWT.fromExtractors([cookieExtractor]), secretOrKey: envsConfig.JWT_SECRET },
             async (jwt_payload, done) => {
                 try {
                     const { email } = jwt_payload;

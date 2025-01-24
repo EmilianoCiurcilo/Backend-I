@@ -8,9 +8,10 @@ import { connectMongoDB } from "./config/mongoDB.config.js";
 import session from "express-session";
 import { initializedPassport } from "./config/passport.config.js";
 import cookieParser from "cookie-parser";
+import envsConfig from "./config/envs.config.js";
 
 const app = express();
-const PORT = 8080;
+const PORT = envsConfig.PORT;
 
 connectMongoDB();
 
