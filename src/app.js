@@ -11,6 +11,7 @@ import cookieParser from "cookie-parser";
 import envsConfig from "./config/envs.config.js";
 
 const app = express();
+
 connectMongoDB();
 
 app.use(express.urlencoded({ extended: true }));
@@ -22,7 +23,7 @@ app.use(express.static("public"));
 
 app.use(
     session({
-        secret: "ClaveSecreta",
+        secret: envsConfig.SECRET_KEY,
         resave: true,
         saveUninitialized: true,
     }),

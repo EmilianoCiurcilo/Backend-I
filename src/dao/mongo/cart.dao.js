@@ -25,45 +25,6 @@ class CartDao {
         const cart = await cartModel.deleteOne({ _id: id });
         return cart;
     }
-
-    async addProductToCart(cid, pid) {
-        const cart = await cartModel.findById(cid);
-
-        const productInCart = cart.products.find((element) => element.product == pid);
-        if (productInCart) {
-            productInCart.quantity++;
-        } else {
-            cart.products.push({ product: pid, quantity: 1 });
-        }
-
-        await cart.save();
-        return cart;
-    }
-
-    async deleteProductToCart(cid, pid) {
-        const cart = await cartModel.findById(cid);
-        cart.products = cart.products.filter((element) => element.product != pid);
-        await cart.save();
-
-        return cart;
-    }
-
-    async updateQuantityProductInCart(cid, pid, quantity) {
-        const cart = await cartModel.findById(cid);
-        const product = cart.products.find((element) => element.product == pid);
-        product.quantity = quantity;
-
-        await cart.save();
-        return cart;
-    }
-
-    async clearProductsToCart(cid) {
-        const cart = await cartModel.findById(cid);
-        cart.products = [];
-
-        await cart.save();
-        return cart;
-    }
 }
 
 export const cartDao = new CartDao();

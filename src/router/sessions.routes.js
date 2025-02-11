@@ -1,5 +1,6 @@
 import { Router } from "express";
 import { userDao } from "../dao/mongo/user.dao.js";
+import { UserDTO } from "../dto/user.dto.js";
 import { createHash, isValidPassword } from "../utils/hashPassword.js";
 import passport from "passport";
 import { createToken, verifyToken } from "../utils/jwt.js";
@@ -86,9 +87,9 @@ router.get("/current", passportCall("jwt"), authorization("user"), async (req, r
     const validToken = verifyToken(token);
     if (!validToken) return res.send("Not token");
 
-    const user = await userDao.getByEmail(validToken.email);
+    const user = new UserDTO(req.user);
 
-    res.json({ status: "ok", user: req.user });
+    res.json({ status: "ok", user: user });
 });
 
 export default router;

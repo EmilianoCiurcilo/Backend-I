@@ -1,28 +1,57 @@
 import { Router } from "express";
+import productManager from "../dao/fileSystem/productManager.js";
+import { io } from "../app.js";
 
 const router = Router();
 
 router.get("/", async (req, res) => {
     try {
-        res.render("home", { title: "Productos" });
+        const products = await productManager.getProducts();
+        res.render("home", { products });
     } catch (error) {
-        res.status(500).send(`<h1>Error</h1><h3>${error.message}</h3>`);
-    }
-});
-
-router.get("/carts/:cid", async (req, res) => {
-    try {
-        res.render("cart", { title: "Tu carrito" });
-    } catch (error) {
-        res.status(500).send(`<h1>Error</h1><h3>${error.message}</h3>`);
+        console.log(error);
+        res.status(500).json({ error: "Error interno del servidor" });
     }
 });
 
 router.get("/realtimeproducts", async (req, res) => {
     try {
-        res.render("realtimeproducts", { title: "Agregar Productos" });
+        const products = await productManager.getProducts();
+        if(products) {
+            io.emit("products", products);
+        }
+        res.render("realTimeProducts");
     } catch (error) {
-        res.status(500).send(`<h1>Error</h1><h3>${error.message}</h3>`);
+        console.log(error);
+        res.status(500).json({ error: "Error interno del servidor" });
+    }
+});
+
+router.post("/realtimeproducts", async (req, res) => {
+    try {
+        const { title, price, description } = req.body;
+        await productManager.addProduct({ title, price, description });
+        const products = await productManager.getProducts();
+        io.emit("products", products);
+
+        res.render("realTimeProducts");
+    } catch (error) {
+        console.log(error);
+        res.status(500).json({ error: "Error interno del servidor" });
+    }
+});
+
+router.delete("/realtimeproducts", async (req, res) => {
+    try {
+        const { id } = req.body;
+        await productManager.deleteProduct(Number(id));
+        const products = await productManager.getProducts();
+        io.emit("products", products);
+
+        res.render("realTimeProducts");
+    } catch (error) {
+        console.log(error);
+        res.status(500).json({ error: "Error interno del servidor" });
     }
 });
 
